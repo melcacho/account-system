@@ -1,0 +1,166 @@
+$border-radius: 5rem;
+$primary: #fecea8;
+$dark: #000;
+$font-weight-normal: 500;
+$border-width: .2rem;
+$input-border-color: #99b898;
+$input-focus-border-color: #ff847c;
+//$input-border-radius: 0.5rem;
+
+@import "node_modules/bootstrap/scss/bootstrap";
+
+html, body {
+	margin: 0;
+	height: 100%;
+	background-color: black;
+}
+@media (max-width: 992px) {
+	img {
+		display: none; 
+	} 
+}
+
+.bg-gradient {
+	background: linear-gradient(#99b898 15%, #fecea8 25%, #ff847c 30%, #e84a5f 35%, #2a363b 70%) 100%;
+    
+    filter: blur(8px);
+    -webkit-filter: blur(100px);
+
+	position:fixed;
+	width:102%;
+	height:102%;
+	left: -1%;
+	right: -1%;
+	top: -1%;
+	bottom: -1%;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.custom-form {
+	color: #fecea8;
+	font-family: 'Courier New', Courier, monospace;
+    height: auto;
+}
+.custom-form form {
+	margin: 1rem;
+	background: #2a363b;
+	box-shadow: 1rem 1rem 1rem #00000088; // h-offset v-offset blur color
+	padding: 1.5rem;
+}
+.custom-form h2 {
+	color: #ff847c;
+	font-weight: bold;
+	margin-top: 0;
+}
+.custom-form p {
+	margin: 0;
+}
+.custom-form hr {
+	margin: 1rem -1.5rem;
+	border-top: 0.2rem solid #fecea8;
+}
+.custom-form .form-control {
+	min-height: 2rem; 
+	color: #000 !important;
+	box-shadow: none !important;
+	border-radius: 0.5rem !important;
+}
+.custom-form .form-group {
+    margin-bottom: 0;
+}
+//---------------- Label Transitions -------------------------------
+.custom-form .form-label{
+	position: absolute;
+	pointer-events: none;
+	z-index: 10;
+	top: 0.5rem;
+	left: 1.3rem;
+	color: transparent;
+	font-weight: bold;
+	border-radius: .2rem;
+	padding: 0 0.2rem;
+	transition: 0.15s ease all;
+}
+.custom-form .form-control::placeholder {
+	transition: 0.15s ease all;
+}
+.custom-form .form-control:focus ~ .form-label{
+	background-color: #ff847c;
+	color: #000;
+	top: -0.8rem;
+	transition: 0.5s ease all, 0.15s ease background-color;
+}
+.custom-form input:not(:focus):not(:placeholder-shown) ~ .form-label,
+.custom-form select:valid ~ .form-label{
+	background-color: #99b898;
+	color: #000;
+	top: -0.8rem;
+	transition: 0.15s ease all;
+}
+.custom-form .form-control:focus::placeholder {
+	top: -0.8rem;
+    color: transparent;
+}
+//---------------- Invalid Feedback -------------------------------
+.custom-form .invalid-feedback {
+	display: block !important;
+	color: transparent;
+	text-align: center;
+	margin-bottom: 1rem;
+}
+.custom-form .is-invalid ~ .invalid-feedback {
+	color: #e84a5f;
+}
+.custom-form .is-invalid:focus {
+	border-color: #ff847c;
+}
+.custom-form .is-invalid:not(:focus):not(:placeholder-shown) ~ .form-label {
+	background-color: $danger;
+}
+//---------------- Buttons -------------------------------
+.custom-form .btn {
+	margin-bottom: 0.5rem;
+}
+.custom-form .btn, .custom-form .btn:active {
+	font-weight: bold;
+	background: #99b898 !important;
+	border: none;
+	min-width: 140px;
+}
+.custom-form .btn:hover, .custom-form .btn:focus {
+	color: #000 !important;
+	background: #fecea8 !important;
+}
+.custom-form .btn-danger {
+	text-decoration: none;
+	color: #fff !important;
+	background: #e84a5f !important;
+}
+.custom-form .btn-danger:hover, .custom-form .btn-danger:focus {
+	text-decoration: none;
+	color: #000 !important;
+	background: #ff847c !important;
+}
+.custom-form .btn:disabled {
+	color: #99b898 !important;
+	background: #2a363b !important;
+}
+
+
+.custom-form a {
+	color: #e84a5f;
+	text-decoration: underline;
+}
+.custom-form a:hover {
+	text-decoration: none;
+}
+.custom-form form a {
+	color: #ff847c;
+	text-decoration: none;
+}	
+.custom-form form a:hover {
+	text-decoration: underline;
+}

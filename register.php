@@ -17,50 +17,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif (!preg_match('/^[a-zA-Z]+$/', trim($_POST["first-name"]))) {
         $name_err = "Name can only contain letters";
     } else {
-        // Prepare a select statement
-        $sql = "SELECT ID FROM accounts WHERE LNAME = ?";
-
-        if ($stmt = $mysqli->prepare($sql)) {
-            // Bind variables to the prepared statement as parameters
-            $stmt->bind_param("s", $param_last_name);
-
-            // Set parameters
-            $param_last_name = trim($_POST["last-name"]);
-
-            // Attempt to execute the prepared statement
-            if ($stmt->execute()) {
-                // store result
-                $stmt->store_result();
-
-                if ($stmt->num_rows == 1) {
-                    $sql = "SELECT ID FROM accounts WHERE FNAME = ?";
-                    
-                    if ($stmt = $mysqli->prepare($sql)) {
-                        $stmt->bind_param("s", $param_first_name);
-                        $param_first_name = trim($_POST["first-name"]);
-
-                        if ($stmt->execute()) {
-                            $stmt->store_result();
-
-                            if ($stmt->num_rows == 1) {
-                                $name_err = "This Name is already taken.";
-                            } else {
-                                $first_name = trim($_POST["first-name"]);
-                                $last_name = trim($_POST["last-name"]);
-                            }
-                        }
-                    }
-                } else {
-                    $first_name = trim($_POST["first-name"]);
-                    $last_name = trim($_POST["last-name"]);
-                }
-            } else {
-                echo "Oops! Something went wrong. Please try again later.";
-            }
-            $stmt->close();
-        } else {
-            echo "Can't fetch data";
-        }
+        $first_name = trim($_POST["first-name"]);
+        $last_name = trim($_POST["last-name"]);
     }
 
 
@@ -69,7 +27,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif(strlen(trim($_POST["student-number"])) < 11) {
         $student_number_err = "Invalid student number.";
     } else {
-        $student_number = trim($_POST["student-number"]);
+        $sql = "SELECT ID FROM accounts WHERE STUD_NUMB = ?";
+
+        if($stmt = $mysqli->prepare($sql)) {
+            $stmt->bind_param("s", $param_email);
+            $param_email = trim($_POST["student-number"]);
+
+            if($stmt->execute()) {
+                $stmt->store_result();
+
+                if($stmt->num_rows > 0) {
+                    $student_number_err = "This Student Number is already taken.";
+                } else {
+                    $student_number = trim($_POST["student-number"]);
+                }
+            }
+        } else {
+            echo "Oops! Something went wrong. Please try again later.";
+        }
     }
 
     if(trim($_POST["year-level"]) == 0) {
@@ -83,7 +58,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } elseif(!in_array('ue.edu.ph', explode('@', trim($_POST["email"])))) {
         $email_err = "Please enter a valid UE email address.";
     } else {
-        $email = trim($_POST["email"]);
+        $sql = "SELECT ID FROM accounts WHERE UE_EMAIL = ?";
+
+        if($stmt = $mysqli->prepare($sql)) {
+            $stmt->bind_param("s", $param_email);
+            $param_email = trim($_POST["email"]);
+
+            if($stmt->execute()) {
+                $stmt->store_result();
+
+                if($stmt->num_rows > 0) {
+                    $email_err = "This Email is already taken.";
+                } else {
+                    $email = trim($_POST["email"]);
+                }
+            }
+        } else {
+            echo "Oops! Something went wrong. Please try again later.";
+        }
+
     }
 
     if(trim($_POST["program"]) == 0) {
@@ -169,7 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
         <title>Sign Up</title>
-        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/main.css">
         <script type="text/javascript" src="js/check.js"></script>
         <!--<script type="text/javascript" src="fa/fontawesome-free-5.15.4-web/js/fontawesome.js"></script>-->
         <script src="https://use.fontawesome.com/releases/v5.15.3/js/all.js" crossorigin="anonymous"></script>
@@ -352,12 +345,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             </span>
                         </div>
                     </div>
-
-                    <!-- Terms -->
-                    <div class="form-group">
-                        <label class="form-check-label">
-                            <input type="checkbox"> I accept the <a href="#">Terms of Use</a> & <a href="#">Privacy Policy</a></label>
-                    </div>
+                    
                     <div class="form-group d-flex justify-content-center">
                         <button type="submit" class="btn btn-primary col-md-6">Sign Up</button>
                     </div>
