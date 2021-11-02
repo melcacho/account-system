@@ -10,7 +10,7 @@
     </head>
 
     <body>
-        <dvi class="bg-gradient"></dvi>
+        <div class="bg-gradient"></div>
         <div class="container-xl h-100 d-flex align-items-center justify-content-center bg-dark">
             <div class="custom-form col-md-6">
                 <form

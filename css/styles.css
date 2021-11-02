@@ -1569,7 +1569,7 @@ pre {
   .form-control:focus {
     color: #495057;
     background-color: #fff;
-    border-color: #e84a5f;
+    border-color: #ff847c;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(254, 206, 168, 0.25); }
   .form-control::placeholder {
@@ -2778,7 +2778,7 @@ input[type="button"].btn-block {
   .custom-control-input:focus ~ .custom-control-label::before {
     box-shadow: 0 0 0 0.2rem rgba(254, 206, 168, 0.25); }
   .custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
-    border-color: #e84a5f; }
+    border-color: #ff847c; }
   .custom-control-input:not(:disabled):active ~ .custom-control-label::before {
     color: #fff;
     background-color: white;
@@ -2873,7 +2873,7 @@ input[type="button"].btn-block {
   border-radius: 5rem;
   appearance: none; }
   .custom-select:focus {
-    border-color: #e84a5f;
+    border-color: #ff847c;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(254, 206, 168, 0.25); }
     .custom-select:focus::-ms-value {
@@ -2922,7 +2922,7 @@ input[type="button"].btn-block {
   overflow: hidden;
   opacity: 0; }
   .custom-file-input:focus ~ .custom-file-label {
-    border-color: #e84a5f;
+    border-color: #ff847c;
     box-shadow: 0 0 0 0.2rem rgba(254, 206, 168, 0.25); }
   .custom-file-input[disabled] ~ .custom-file-label, .custom-file-input:disabled ~ .custom-file-label {
     background-color: #e9ecef; }
@@ -7867,6 +7867,9 @@ html, body {
   min-height: 38px;
   box-shadow: none !important; }
 
+.custom-form .form-control:focus {
+  border-color: #ff847c; }
+
 .custom-form .input-group-text {
   color: #2a363b;
   font-weight: bold;
@@ -7875,8 +7878,8 @@ html, body {
   transition: background-color 0.15s ease-in-out; }
 
 .custom-form .input-group:focus-within .input-group-text {
-  color: #fff !important;
-  background-color: #e84a5f; }
+  color: #000 !important;
+  background-color: #ff847c; }
 
 .custom-form .input-group-addon {
   max-width: 42px;
@@ -7910,17 +7913,22 @@ html, body {
 .custom-form form a:hover {
   text-decoration: underline; }
 
-.custom-form .fa {
-  font-size: 21px; }
+/*.custom-form .fa-check {
+	color: #fff;
+	left: 17px;
+	top: 18px;
+	font-size: .5rem;
+	position: absolute;
+}*/
+.custom-form .invalid-feedback {
+  display: block !important;
+  color: transparent;
+  text-align: center; }
 
-.custom-form .fa-paper-plane {
-  font-size: 18px; }
+.custom-form .is-invalid ~ .invalid-feedback {
+  color: #e84a5f; }
 
-.custom-form .fa-check {
-  color: #fff;
-  left: 17px;
-  top: 18px;
-  font-size: 7px;
-  position: absolute; }
+.custom-form .input-group-text.is-invalid {
+  background-color: #dc3545; }
 
 /*# sourceMappingURL=styles.css.map */
