@@ -36,8 +36,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $param_password = password_hash($password, PASSWORD_DEFAULT);
 
             if ($stmt->execute()) {
-                session_start();
-                header("location: index.php");
+                echo '<script>
+                alert("Password Changed");
+                window.location.href="index.php";
+                </script>';
             } else {
                 echo "Oops! Something went wrong. Please try again later.";
             }

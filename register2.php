@@ -6,15 +6,19 @@ require_once "config.php";
 $first_name = $last_name = $student_number = $year_level = $email = $program = $sex = $contact_number = $birth_date = 
 $birth_year = $birth_day = $birth_month = $password = "";
 $name_err = $student_number_err = $year_level_err = $email_err = $program_err = 
-$sex_err = $contact_number_err = $birth_date_err = "";
+$sex_err = $contact_number_err = $birth_date_err = $terms_err = "";
 
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
+    if(!isset($_POST['terms'])) {
+        $terms_err = "Must accept Terms of Use & Privacy Policy";
+    }
+
     // Validate first_name
     if (empty(trim($_POST["first-name"])) || empty(trim($_POST["last-name"]))) {
         $name_err = "Please enter a full name.";
-    } elseif (!preg_match('/^[a-zA-Z]+$/', trim($_POST["first-name"]))) {
+    } elseif (!preg_match('/^[a-zA-Z ]+$/', trim($_POST["first-name"]))) {
         $name_err = "Name can only contain letters";
     } else {
         $first_name = trim($_POST["first-name"]);
@@ -79,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if(trim($_POST["program"]) == 0) {
-        $program_err = "Please choose program.";
+        $program_err = "Please choose a program.";
     } else {
         $program = trim($_POST["program"]);
     }
@@ -87,13 +91,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if(empty(trim($_POST["contact-number"]))) {
         $contact_number_err = "Please enter contact number.";
     } elseif(strlen(trim($_POST["contact-number"])) < 11) {
-        $student_number_err = "Invalid contact number.";
-    } else {
+        $contact_number_err = "Invalid. Must be 11 digits.";
+    }else {
         $contact_number = trim($_POST["contact-number"]);
     }
 
     if(trim($_POST["sex"]) == 0) {
-        $sex_err = "Please choose sex.";
+        $sex_err = "Please select an option.";
     } else {
         $sex = trim($_POST["sex"]);
     }
@@ -140,7 +144,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Attempt to execute the prepared statement
             if ($stmt->execute()) {
                 // Records created successfully. Redirect to landing page
-                header("location: index.php");
+                echo '<script>
+                alert("Account Created");
+                window.location.href="index.php";
+                </script>';
                 exit();
             } else {
                 echo "Oops! Something went wrong. Please try again later.";
@@ -247,9 +254,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <select class="form-control <?php echo (!empty($year_level_err)) ? 'is-invalid' : ''; ?>" 
                             aria-label="Default select example" 
                             name="year-level"
-                            required
                             value="<?php echo $year_level; ?>">
-                                <option value="" <?php echo ($year_level == 0) ? 'selected': ''?> hidden>Year Level</option>
+                                <option value="0" <?php echo ($year_level == 0) ? 'selected': ''?> hidden>Select Year Level</option>
                                 <option value="1" <?php echo ($year_level == 1) ? 'selected': ''?>>1st</option>
                                 <option value="2" <?php echo ($year_level == 2) ? 'selected': ''?>>2nd</option>
                                 <option value="3" <?php echo ($year_level == 3) ? 'selected': ''?>>3rd</option>
@@ -266,9 +272,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <select class="form-control <?php echo (!empty($program_err)) ? 'is-invalid' : ''; ?>" 
                             aria-label="Default select example" 
                             name="program"
-                            required
                             value="<?php echo $program; ?>">
-                                <option value="" <?php echo ($program == 0) ? 'selected': ''?> hidden>Program</option>
+                                <option value="0" <?php echo ($program == 0) ? 'selected': ''?> hidden>Select Program</option>
                                 <option value="ce" <?php echo ($program == 'ce') ? 'selected': ''?>>Civil Engineering</option>
                                 <option value="cpe" <?php echo ($program == 'cpe') ? 'selected': ''?>>Computer Engineering</option>
                                 <option value="ee" <?php echo ($program == 'ee') ? 'selected': ''?>>Electrical Engineering</option>
@@ -302,9 +307,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                             <select class="form-control <?php echo (!empty($sex_err)) ? 'is-invalid' : ''; ?>" 
                             aria-label="Default select example" 
                             name="sex"
-                            required
                             value="<?php echo $sex; ?>">
-                                <option value="" <?php echo ($sex == 0) ? 'selected': ''?> hidden>Sex</option>
+                                <option value="0" <?php echo ($sex == 0) ? 'selected': ''?> hidden>Select Sex</option>
                                 <option value="male" <?php echo ($sex == 'male') ? 'selected': ''?>>Male</option>
                                 <option value="female" <?php echo ($sex == 'female') ? 'selected': ''?>>Female</option>
                                 <option value="n/a" <?php echo ($sex == 'n/a') ? 'selected': ''?>>Prefer not to disclose</option>
@@ -330,6 +334,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <?php echo (!empty($email_err)) ? $email_err : '_'; ?>
                             </span>
                         </div>
+                    </div>
+
+                    
+                    <div class="form-group">
+                        <label class="form-check-label <?php echo (!empty($terms_err)) ? 'is-invalid' : ''; ?>">
+                            <input type="checkbox"
+                            name="terms">
+                            I accept the <a href="#">Terms of Use</a> &amp; <a href="#">Privacy Policy</a></label>
+
+                            <span class="invalid-feedback">
+                                <?php echo (!empty($terms_err)) ? $terms_err : '_'; ?>
+                            </span>
                     </div>
 
                     <!-- SUBMIT -->

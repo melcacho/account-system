@@ -5,7 +5,7 @@ $font-weight-normal: 500;
 $border-width: .2rem;
 $input-border-color: #99b898;
 $input-focus-border-color: #ff847c;
-//$input-border-radius: 0.5rem;
+$enable-validation-icons: false;
 
 @import "node_modules/bootstrap/scss/bootstrap";
 
@@ -75,7 +75,7 @@ html, body {
 .custom-form .form-label{
 	position: absolute;
 	pointer-events: none;
-	z-index: 10;
+	z-index: 5;
 	top: 0.5rem;
 	left: 1.3rem;
 	color: transparent;
@@ -94,7 +94,7 @@ html, body {
 	transition: 0.5s ease all, 0.15s ease background-color;
 }
 .custom-form input:not(:focus):not(:placeholder-shown) ~ .form-label,
-.custom-form select:valid ~ .form-label{
+.custom-form select:not(:focus) ~ .form-label{
 	background-color: #99b898;
 	color: #000;
 	top: -0.8rem;
@@ -108,8 +108,9 @@ html, body {
 .custom-form .invalid-feedback {
 	display: block !important;
 	color: transparent;
-	text-align: center;
-	margin-bottom: 1rem;
+	text-align: right;
+	margin-top: 0;
+	margin-bottom: .5rem;
 }
 .custom-form .is-invalid ~ .invalid-feedback {
 	color: #e84a5f;
@@ -148,11 +149,23 @@ html, body {
 	color: #99b898 !important;
 	background: #2a363b !important;
 }
-
-
+//---------------- Alert -------------------------------
+.alert {
+	padding: 0.5rem;
+	text-align: center;
+}
 .custom-form a {
 	color: #e84a5f;
 	text-decoration: underline;
+}
+.custom-form .form-group .btn-warning {
+	color: #000;
+	text-decoration: none;
+	background-color: $warning !important;
+}
+.custom-form .form-group .btn-warning:hover {
+	text-decoration: none;
+	background-color: #fecea8 !important;
 }
 .custom-form a:hover {
 	text-decoration: none;
